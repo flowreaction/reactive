@@ -1,0 +1,58 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# Bring you own Signals\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## what is reactivity and do we even need it?"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "let counter = 0;\n\nlet myMoney = counter * 985;\n\nconst int = setInterval(() => {\n  counter++;\n  console.log(`${counter}s: I have ${myMoney} dollars`);\n}, 1000);\n\nconsole.log(myMoney);\n\nsetTimeout(() => {\n  clearInterval(int);\n}, 10000);\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "0",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "simple vanilla js example:"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const counter = 0;\nconst setCounter = (value: number) => {\n  counter = value;\n  render();\n};\n\n\nconst myMoneyGetter = () => counter * 985;\nconst render = () => console.log(`${counter}s: I have ${myMoneyGetter} dollars`);\n\n// Simulate external updates to counter...\nconst interval = setInterval(() => setCounter(counter++), 1000);\n\n// Cleanup\nsetTimeout(() => clearInterval(interval), 10000);"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import {ref, computed, effect} from './lib/index';\n\nconst counterRef = ref(0);\n\nconst myMoneyComputed = computed(() => counterRef.value * 985);\n\neffect(() => console.log(`${counterRef.value}s: I have ${myMoneyComputed.value} dollars`));"
+            ],
+            "outputs": []
+        }
+    ]
+}
